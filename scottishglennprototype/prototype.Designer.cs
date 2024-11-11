@@ -38,10 +38,10 @@
             // 
             // btnAddAsset
             // 
-            btnAddAsset.Location = new Point(261, 427);
+            btnAddAsset.Location = new Point(68, 418);
             btnAddAsset.Margin = new Padding(4, 5, 4, 5);
             btnAddAsset.Name = "btnAddAsset";
-            btnAddAsset.Size = new Size(503, 38);
+            btnAddAsset.Size = new Size(462, 38);
             btnAddAsset.TabIndex = 1;
             btnAddAsset.Text = "add asset";
             btnAddAsset.UseVisualStyleBackColor = true;
@@ -49,10 +49,10 @@
             // 
             // btnViewAsset
             // 
-            btnViewAsset.Location = new Point(261, 475);
+            btnViewAsset.Location = new Point(769, 493);
             btnViewAsset.Margin = new Padding(4, 5, 4, 5);
             btnViewAsset.Name = "btnViewAsset";
-            btnViewAsset.Size = new Size(503, 38);
+            btnViewAsset.Size = new Size(462, 38);
             btnViewAsset.TabIndex = 3;
             btnViewAsset.Text = "view asset";
             btnViewAsset.UseVisualStyleBackColor = true;
@@ -60,10 +60,10 @@
             // 
             // btnEditAsset
             // 
-            btnEditAsset.Location = new Point(261, 523);
+            btnEditAsset.Location = new Point(769, 418);
             btnEditAsset.Margin = new Padding(4, 5, 4, 5);
             btnEditAsset.Name = "btnEditAsset";
-            btnEditAsset.Size = new Size(503, 38);
+            btnEditAsset.Size = new Size(462, 38);
             btnEditAsset.TabIndex = 4;
             btnEditAsset.Text = "edit asset";
             btnEditAsset.UseVisualStyleBackColor = true;
@@ -71,10 +71,10 @@
             // 
             // btnDeleteAsset
             // 
-            btnDeleteAsset.Location = new Point(261, 572);
+            btnDeleteAsset.Location = new Point(68, 493);
             btnDeleteAsset.Margin = new Padding(4, 5, 4, 5);
             btnDeleteAsset.Name = "btnDeleteAsset";
-            btnDeleteAsset.Size = new Size(503, 38);
+            btnDeleteAsset.Size = new Size(462, 38);
             btnDeleteAsset.TabIndex = 5;
             btnDeleteAsset.Text = "delete asset";
             btnDeleteAsset.UseVisualStyleBackColor = true;
@@ -83,18 +83,18 @@
             // dataGridViewAssets
             // 
             dataGridViewAssets.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewAssets.Location = new Point(261, 167);
+            dataGridViewAssets.Location = new Point(68, 142);
             dataGridViewAssets.Margin = new Padding(4, 5, 4, 5);
             dataGridViewAssets.Name = "dataGridViewAssets";
             dataGridViewAssets.RowHeadersWidth = 62;
-            dataGridViewAssets.Size = new Size(503, 250);
+            dataGridViewAssets.Size = new Size(1163, 250);
             dataGridViewAssets.TabIndex = 6;
             // 
             // prototype
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1143, 750);
+            ClientSize = new Size(1281, 750);
             Controls.Add(dataGridViewAssets);
             Controls.Add(btnDeleteAsset);
             Controls.Add(btnEditAsset);

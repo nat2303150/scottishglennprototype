@@ -37,6 +37,7 @@ namespace scottishglennprototype
                                "FROM Assets A " +
                                "JOIN Employees E ON A.EmployeeID = E.EmployeeID";
 
+
                 MySqlDataAdapter adapter = new MySqlDataAdapter(query, connection);
                 DataTable assetTable = new DataTable();
                 adapter.Fill(assetTable);
@@ -54,13 +55,15 @@ namespace scottishglennprototype
             string ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
             DateTime purchaseDate = DateTime.Now;
             string textNote = Interaction.InputBox("Enter Note:", "Add Asset", "");
-            int employeeID = Convert.ToInt32(Interaction.InputBox("Enter Employee ID:", "Add Asset", "1"));
+            //int employeeID = Convert.ToInt32(Interaction.InputBox("Enter Employee ID:", "Add Asset", "1"));
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "INSERT INTO Assets (SystemName, Model, Manufacturer, AssetType, IPAddress, PurchaseDate, TextNote, EmployeeID) " +
-                               "VALUES (@SystemName, @Model, @Manufacturer, @AssetType, @IPAddress, @PurchaseDate, @TextNote, @EmployeeID)";
+                //string query = "INSERT INTO Assets (SystemName, Model, Manufacturer, AssetType, IPAddress, PurchaseDate, TextNote, EmployeeID) " +
+                              //"VALUES (@SystemName, @Model, @Manufacturer, @AssetType, @IPAddress, @PurchaseDate, @TextNote, @EmployeeID)";
+                string query = "INSERT INTO Assets (SystemName, Model, Manufacturer, AssetType, IPAddress, PurchaseDate, TextNote) " +
+                               "VALUES (@SystemName, @Model, @Manufacturer, @AssetType, @IPAddress, @PurchaseDate, @TextNote";
 
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
@@ -71,7 +74,8 @@ namespace scottishglennprototype
                     command.Parameters.AddWithValue("@IPAddress", ipAddress);
                     command.Parameters.AddWithValue("@PurchaseDate", purchaseDate);
                     command.Parameters.AddWithValue("@TextNote", textNote);
-                    command.Parameters.AddWithValue("@EmployeeID", employeeID);
+                    //command.Parameters.AddWithValue("@EmployeeID", employeeID);
+
 
                     command.ExecuteNonQuery();
                 }
