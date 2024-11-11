@@ -1,14 +1,20 @@
+using Microsoft.VisualBasic;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Net;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+
+
 
 namespace scottishglennprototype
 {
     public partial class prototype : Form
     {
-        private string connectionString = "Data Source=tolmount.abertay.ac.uk;Initial Catalog=sql2303150;User ID=mssql2303150;Password=perry-pearl-staff-floral";
+        //connect to db
+        private string connectionString = "Data Source=lochnagar.abertay.ac.uk;Initial Catalog=sql2303150;User ID=sql2303150;Password=perry-pearl-staff-floral";
 
         public prototype()
         {
@@ -20,13 +26,58 @@ namespace scottishglennprototype
             loadAssets();
         }
 
-        private void loadAssets() {
-            //todo
+        private void loadAssets()
+        {
+            //loads assets from database to display in table
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT A.AssetID, A.SystemName, A.Model, A.Manufacturer, A.AssetType, A.IPAddress, A.PurchaseDate, A.TextNote, " +
+                               "E.FirstName + ' ' + E.LastName AS EmployeeName " +
+                               "FROM Assets A " +
+                               "JOIN Employees E ON A.EmployeeID = E.EmployeeID";
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(query, connection);
+                DataTable assetTable = new DataTable();
+                adapter.Fill(assetTable);
+
+                dataGridViewAssets.DataSource = assetTable;
+            }
         }
-            
+
         private void btnAddAsset_Click(object sender, EventArgs e)
         {
-            //todo
+            string systemName = Interaction.InputBox("Enter System Name:", "Add Asset", "");
+            string model = Interaction.InputBox("Enter Model:", "Add Asset", "");
+            string manufacturer = Interaction.InputBox("Enter Manufacturer:", "Add Asset", "");
+            string assetType = Interaction.InputBox("Enter Asset Type:", "Add Asset", "");
+            string ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
+            DateTime purchaseDate = DateTime.Now;
+            string textNote = Interaction.InputBox("Enter Note:", "Add Asset", "");
+            int employeeID = Convert.ToInt32(Interaction.InputBox("Enter Employee ID:", "Add Asset", "1"));
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "INSERT INTO Assets (SystemName, Model, Manufacturer, AssetType, IPAddress, PurchaseDate, TextNote, EmployeeID) " +
+                               "VALUES (@SystemName, @Model, @Manufacturer, @AssetType, @IPAddress, @PurchaseDate, @TextNote, @EmployeeID)";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@SystemName", systemName);
+                    command.Parameters.AddWithValue("@Model", model);
+                    command.Parameters.AddWithValue("@Manufacturer", manufacturer);
+                    command.Parameters.AddWithValue("@AssetType", assetType);
+                    command.Parameters.AddWithValue("@IPAddress", ipAddress);
+                    command.Parameters.AddWithValue("@PurchaseDate", purchaseDate);
+                    command.Parameters.AddWithValue("@TextNote", textNote);
+                    command.Parameters.AddWithValue("@EmployeeID", employeeID);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            loadAssets();
         }
 
         private void btnViewAsset_Click(object sender, EventArgs e)

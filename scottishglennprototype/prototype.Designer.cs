@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox = new TextBox();
             btnAddAsset = new Button();
             btnViewAsset = new Button();
             btnEditAsset = new Button();
@@ -37,18 +36,12 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewAssets).BeginInit();
             SuspendLayout();
             // 
-            // textBox
-            // 
-            textBox.Location = new Point(183, 227);
-            textBox.Name = "textBox";
-            textBox.Size = new Size(352, 23);
-            textBox.TabIndex = 2;
-            // 
             // btnAddAsset
             // 
-            btnAddAsset.Location = new Point(183, 256);
+            btnAddAsset.Location = new Point(261, 427);
+            btnAddAsset.Margin = new Padding(4, 5, 4, 5);
             btnAddAsset.Name = "btnAddAsset";
-            btnAddAsset.Size = new Size(352, 23);
+            btnAddAsset.Size = new Size(503, 38);
             btnAddAsset.TabIndex = 1;
             btnAddAsset.Text = "add asset";
             btnAddAsset.UseVisualStyleBackColor = true;
@@ -56,9 +49,10 @@
             // 
             // btnViewAsset
             // 
-            btnViewAsset.Location = new Point(183, 285);
+            btnViewAsset.Location = new Point(261, 475);
+            btnViewAsset.Margin = new Padding(4, 5, 4, 5);
             btnViewAsset.Name = "btnViewAsset";
-            btnViewAsset.Size = new Size(352, 23);
+            btnViewAsset.Size = new Size(503, 38);
             btnViewAsset.TabIndex = 3;
             btnViewAsset.Text = "view asset";
             btnViewAsset.UseVisualStyleBackColor = true;
@@ -66,9 +60,10 @@
             // 
             // btnEditAsset
             // 
-            btnEditAsset.Location = new Point(183, 314);
+            btnEditAsset.Location = new Point(261, 523);
+            btnEditAsset.Margin = new Padding(4, 5, 4, 5);
             btnEditAsset.Name = "btnEditAsset";
-            btnEditAsset.Size = new Size(352, 23);
+            btnEditAsset.Size = new Size(503, 38);
             btnEditAsset.TabIndex = 4;
             btnEditAsset.Text = "edit asset";
             btnEditAsset.UseVisualStyleBackColor = true;
@@ -76,9 +71,10 @@
             // 
             // btnDeleteAsset
             // 
-            btnDeleteAsset.Location = new Point(183, 343);
+            btnDeleteAsset.Location = new Point(261, 572);
+            btnDeleteAsset.Margin = new Padding(4, 5, 4, 5);
             btnDeleteAsset.Name = "btnDeleteAsset";
-            btnDeleteAsset.Size = new Size(352, 23);
+            btnDeleteAsset.Size = new Size(503, 38);
             btnDeleteAsset.TabIndex = 5;
             btnDeleteAsset.Text = "delete asset";
             btnDeleteAsset.UseVisualStyleBackColor = true;
@@ -87,33 +83,32 @@
             // dataGridViewAssets
             // 
             dataGridViewAssets.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewAssets.Location = new Point(183, 71);
+            dataGridViewAssets.Location = new Point(261, 167);
+            dataGridViewAssets.Margin = new Padding(4, 5, 4, 5);
             dataGridViewAssets.Name = "dataGridViewAssets";
-            dataGridViewAssets.Size = new Size(352, 150);
+            dataGridViewAssets.RowHeadersWidth = 62;
+            dataGridViewAssets.Size = new Size(503, 250);
             dataGridViewAssets.TabIndex = 6;
             // 
             // prototype
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1143, 750);
             Controls.Add(dataGridViewAssets);
             Controls.Add(btnDeleteAsset);
             Controls.Add(btnEditAsset);
             Controls.Add(btnViewAsset);
             Controls.Add(btnAddAsset);
-            Controls.Add(textBox);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "prototype";
             Text = "Form1";
             Load += prototype_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewAssets).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private TextBox textBox;
         private Button btnAddAsset;
         private Button btnViewAsset;
         private Button btnEditAsset;
