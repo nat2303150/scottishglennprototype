@@ -1,8 +1,6 @@
 using Microsoft.VisualBasic;
 using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
 using System.Net;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
@@ -32,10 +30,13 @@ namespace scottishglennprototype
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT A.AssetID, A.SystemName, A.Model, A.Manufacturer, A.AssetType, A.IPAddress, A.PurchaseDate, A.TextNote, " +
-                               "E.FirstName + ' ' + E.LastName AS EmployeeName " +
-                               "FROM Assets A " +
-                               "JOIN Employees E ON A.EmployeeID = E.EmployeeID";
+                string query = "SELECT e.EmployeeID, e.FirstName, e.LastName, e.Email, d.Name AS DepartmentName, " +
+                               "a.SystemName, a.Model, a.Manufacturer, a.AssetType, a.IPAddress, a.PurchaseDate, a.TextNote " +
+                               "FROM Employees e " +
+                               "JOIN Departments d ON e.DepartmentID = d.DepartmentID " +
+                               "LEFT JOIN Assets a ON e.EmployeeID = a.EmployeeID";
+
+
 
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(query, connection);
@@ -46,6 +47,7 @@ namespace scottishglennprototype
             }
         }
 
+
         private void btnAddAsset_Click(object sender, EventArgs e)
         {
             string systemName = Interaction.InputBox("Enter System Name:", "Add Asset", "");
@@ -55,15 +57,14 @@ namespace scottishglennprototype
             string ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0].ToString();
             DateTime purchaseDate = DateTime.Now;
             string textNote = Interaction.InputBox("Enter Note:", "Add Asset", "");
-            //int employeeID = Convert.ToInt32(Interaction.InputBox("Enter Employee ID:", "Add Asset", "1"));
+            int employeeID = Convert.ToInt32(Interaction.InputBox("Enter Employee ID:", "Add Asset", "1"));
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                //string query = "INSERT INTO Assets (SystemName, Model, Manufacturer, AssetType, IPAddress, PurchaseDate, TextNote, EmployeeID) " +
-                              //"VALUES (@SystemName, @Model, @Manufacturer, @AssetType, @IPAddress, @PurchaseDate, @TextNote, @EmployeeID)";
-                string query = "INSERT INTO Assets (SystemName, Model, Manufacturer, AssetType, IPAddress, PurchaseDate, TextNote) " +
-                               "VALUES (@SystemName, @Model, @Manufacturer, @AssetType, @IPAddress, @PurchaseDate, @TextNote)";
+                string query = "INSERT INTO Assets (SystemName, Model, Manufacturer, AssetType, IPAddress, PurchaseDate, TextNote, EmployeeID) " +
+                              "VALUES (@SystemName, @Model, @Manufacturer, @AssetType, @IPAddress, @PurchaseDate, @TextNote, @EmployeeID)";
+
 
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
@@ -74,7 +75,7 @@ namespace scottishglennprototype
                     command.Parameters.AddWithValue("@IPAddress", ipAddress);
                     command.Parameters.AddWithValue("@PurchaseDate", purchaseDate);
                     command.Parameters.AddWithValue("@TextNote", textNote);
-                    //command.Parameters.AddWithValue("@EmployeeID", employeeID);
+                    command.Parameters.AddWithValue("@EmployeeID", employeeID);
 
 
                     command.ExecuteNonQuery();
