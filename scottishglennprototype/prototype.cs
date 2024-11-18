@@ -4,6 +4,7 @@ using System.Data;
 using System.Net;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using Mysqlx.Expr;
 
 
 
@@ -24,6 +25,8 @@ namespace scottishglennprototype
             loadAssets();
         }
 
+
+        //function loads assets from database
         private void loadAssets()
         {
             //loads assets from database to display in table
@@ -31,7 +34,7 @@ namespace scottishglennprototype
             {
                 connection.Open();
                 string query = "SELECT e.EmployeeID, e.FirstName, e.LastName, e.Email, d.Name AS DepartmentName, " +
-                               "a.SystemName, a.Model, a.Manufacturer, a.AssetType, a.IPAddress, a.PurchaseDate, a.TextNote " +
+                               "a.SystemName, a.Model, a.Manufacturer, a.AssetType, a.IPAddress, a.PurchaseDate, a.TextNote, a.AssetID " +
                                "FROM Employees e " +
                                "JOIN Departments d ON e.DepartmentID = d.DepartmentID " +
                                "LEFT JOIN Assets a ON e.EmployeeID = a.EmployeeID";
@@ -88,6 +91,8 @@ namespace scottishglennprototype
         private void btnViewAsset_Click(object sender, EventArgs e)
         {
             //todo
+            
+
         }
 
         private void btnEditAsset_Click(object sender, EventArgs e)
@@ -95,9 +100,60 @@ namespace scottishglennprototype
             //todo
         }
 
+
+
+        // function deletes selected asset 
         private void btnDeleteAsset_Click(object sender, EventArgs e)
         {
-            //todo
+            if (dataGridViewAssets.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select an asset to delete from the table above.", "Delete Asset", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            //gets asset id from the table
+            int assetID = Convert.ToInt32(dataGridViewAssets.SelectedRows[0].Cells["AssetID"].Value);
+
+            //  checks user wants to delete the asset
+            DialogResult confirmResult = MessageBox.Show(
+                "Are you sure you want to delete this asset?",
+                "Delete Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "DELETE FROM Assets WHERE AssetID = @AssetID";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@AssetID", assetID);
+
+                        try
+                        {
+                            int rowsAffected = command.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Asset deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                loadAssets(); 
+                            }
+                            else
+                            {
+                                MessageBox.Show("No asset found with the given ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"An error occurred while deleting the asset: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
         }
     }
 }
