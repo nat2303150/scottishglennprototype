@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             btnAddAsset = new Button();
-            btnViewAsset = new Button();
             btnEditAsset = new Button();
             btnDeleteAsset = new Button();
             dataGridViewAssets = new DataGridView();
@@ -46,17 +45,6 @@
             btnAddAsset.Text = "add asset";
             btnAddAsset.UseVisualStyleBackColor = true;
             btnAddAsset.Click += btnAddAsset_Click;
-            // 
-            // btnViewAsset
-            // 
-            btnViewAsset.Location = new Point(769, 493);
-            btnViewAsset.Margin = new Padding(4, 5, 4, 5);
-            btnViewAsset.Name = "btnViewAsset";
-            btnViewAsset.Size = new Size(462, 38);
-            btnViewAsset.TabIndex = 3;
-            btnViewAsset.Text = "view asset";
-            btnViewAsset.UseVisualStyleBackColor = true;
-            btnViewAsset.Click += btnViewAsset_Click;
             // 
             // btnEditAsset
             // 
@@ -98,7 +86,6 @@
             Controls.Add(dataGridViewAssets);
             Controls.Add(btnDeleteAsset);
             Controls.Add(btnEditAsset);
-            Controls.Add(btnViewAsset);
             Controls.Add(btnAddAsset);
             Margin = new Padding(4, 5, 4, 5);
             Name = "prototype";
@@ -110,7 +97,6 @@
 
         #endregion
         private Button btnAddAsset;
-        private Button btnViewAsset;
         private Button btnEditAsset;
         private Button btnDeleteAsset;
         private DataGridView dataGridViewAssets;

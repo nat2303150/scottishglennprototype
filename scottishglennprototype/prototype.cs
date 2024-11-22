@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Mysqlx.Expr;
+using Microsoft.VisualBasic.ApplicationServices;
 
 
 
@@ -12,12 +13,21 @@ namespace scottishglennprototype
 {
     public partial class prototype : Form
     {
+        private int userID;
+
         //connect to db
         private string connectionString = "Data Source=lochnagar.abertay.ac.uk;Initial Catalog=sql2303150;User ID=sql2303150;Password=perry-pearl-staff-floral";
 
         public prototype()
         {
             InitializeComponent();
+        }
+
+        public prototype(int userID)
+        {
+            InitializeComponent();
+            this.userID = userID;
+
         }
 
         private void prototype_Load(object sender, EventArgs e)
@@ -48,6 +58,11 @@ namespace scottishglennprototype
 
                 dataGridViewAssets.DataSource = assetTable;
             }
+        }
+
+        private void getSystemData(object sender, EventArgs e)
+        {
+            //todo
         }
 
 
@@ -88,16 +103,53 @@ namespace scottishglennprototype
             loadAssets();
         }
 
-        private void btnViewAsset_Click(object sender, EventArgs e)
-        {
-            //todo
-            
 
-        }
-
+        //function to edit the selected asset in the table
         private void btnEditAsset_Click(object sender, EventArgs e)
         {
-            //todo
+
+                if (dataGridViewAssets.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select an asset to edit.", "Edit Asset", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                DataGridViewRow selectedRow = dataGridViewAssets.SelectedRows[0];
+                int assetID = Convert.ToInt32(selectedRow.Cells["AssetID"].Value);
+
+                
+                string newSystemName = Interaction.InputBox("Enter new System Name:", "Edit Asset", selectedRow.Cells["SystemName"].Value.ToString());
+                string newModel = Interaction.InputBox("Enter new Model:", "Edit Asset", selectedRow.Cells["Model"].Value.ToString());
+                string newManufacturer = Interaction.InputBox("Enter new Manufacturer:", "Edit Asset", selectedRow.Cells["Manufacturer"].Value.ToString());
+                string newAssetType = Interaction.InputBox("Enter new Asset Type:", "Edit Asset", selectedRow.Cells["AssetType"].Value.ToString());
+
+                // updates database
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "UPDATE Assets SET SystemName = @SystemName, Model = @Model, Manufacturer = @Manufacturer, AssetType = @AssetType WHERE AssetID = @AssetID";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@SystemName", newSystemName);
+                        command.Parameters.AddWithValue("@Model", newModel);
+                        command.Parameters.AddWithValue("@Manufacturer", newManufacturer);
+                        command.Parameters.AddWithValue("@AssetType", newAssetType);
+                        command.Parameters.AddWithValue("@AssetID", assetID);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Asset was updated successfully.", "Edit Asset", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            loadAssets(); 
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to update the asset. Please try again.", "Edit Asset", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            
         }
 
 
@@ -139,12 +191,12 @@ namespace scottishglennprototype
                             int rowsAffected = command.ExecuteNonQuery();
                             if (rowsAffected > 0)
                             {
-                                MessageBox.Show("Asset deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Asset was deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 loadAssets(); 
                             }
                             else
                             {
-                                MessageBox.Show("No asset found with the given ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("No asset was found with the given ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         catch (Exception ex)
