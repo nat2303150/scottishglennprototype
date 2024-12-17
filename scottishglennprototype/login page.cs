@@ -30,7 +30,7 @@ namespace scottishglennprototype
                     connection.Open();
 
                     
-                    string query = "SELECT EmployeeID, PasswordHash FROM Employees WHERE Email = @Email";
+                    string query = "SELECT EmployeeID, PasswordHash, DepartmentID FROM Employees WHERE Email = @Email";
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
@@ -43,14 +43,18 @@ namespace scottishglennprototype
                             {
                                 string storedHash = reader["PasswordHash"].ToString();
                                 int userID = Convert.ToInt32(reader["EmployeeID"]);
+                                string departmentID = reader["DepartmentID"].ToString();
 
-                                
                                 if (PasswordUtils.VerifyPassword(pswrdBox.Text, storedHash))
                                 {
+
+                                    bool isAdmin = departmentID == "5";
                                     this.Hide();
 
+
+
                                     
-                                    prototype main = new prototype(userID);
+                                    prototype main = new prototype(userID, isAdmin);
                                     main.Show();
                                 }
                                 else

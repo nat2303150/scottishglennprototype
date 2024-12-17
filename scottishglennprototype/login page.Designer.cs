@@ -37,21 +37,21 @@
             // 
             // usrnmBox
             // 
-            usrnmBox.Location = new Point(218, 142);
+            usrnmBox.Location = new Point(816, 395);
             usrnmBox.Name = "usrnmBox";
             usrnmBox.Size = new Size(350, 23);
             usrnmBox.TabIndex = 0;
             // 
             // pswrdBox
             // 
-            pswrdBox.Location = new Point(218, 199);
+            pswrdBox.Location = new Point(816, 452);
             pswrdBox.Name = "pswrdBox";
             pswrdBox.Size = new Size(350, 23);
             pswrdBox.TabIndex = 1;
             // 
             // loginBtn
             // 
-            loginBtn.Location = new Point(218, 256);
+            loginBtn.Location = new Point(816, 509);
             loginBtn.Name = "loginBtn";
             loginBtn.Size = new Size(350, 23);
             loginBtn.TabIndex = 2;
@@ -62,7 +62,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(176, 145);
+            label1.Location = new Point(774, 398);
             label1.Name = "label1";
             label1.Size = new Size(36, 15);
             label1.TabIndex = 3;
@@ -71,7 +71,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(155, 202);
+            label2.Location = new Point(753, 455);
             label2.Name = "label2";
             label2.Size = new Size(57, 15);
             label2.TabIndex = 4;
@@ -81,7 +81,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1904, 1041);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(loginBtn);
